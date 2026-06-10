@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Phiaq Art Store – Premium Framed Artworks & Prints</title>
+<meta name="description" content="Shop premium framed artworks and prints. Order online and get delivered to your doorstep."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Bootstrap Icons replaced with inline SVGs for reliability -->
+<style>
+:root{
+  --ink:#0A0A0A;
+  --cream:#FAF7F2;
+  --gold:#C9A84C;
+  --gold-light:#E8D5A3;
+  --rust:#8B3A2A;
+  --stone:#6B6560;
+  --border:#E2DDD6;
+  --white:#FFFFFF;
+  --card:#FFFFFF;
+  --radius:4px;
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'Inter',sans-serif;
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"]{
+  --ink:#F5F0E8;
+  --cream:#111008;
+  --white:#1A1710;
+  --card:#1E1B14;
+  --border:#2E2A22;
+  --stone:#9B9590;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--cream);color:var(--ink);overflow-x:hidden;transition:background .3s,color .3s;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;}
+button{cursor:pointer;font-family:var(--font-body);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 24px;border-radius:50px;font-size:13px;opacity:0;transition:all .35s;z-index:9999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 0;transition:var(--transition);}
+.navbar.scrolled{background:rgba(250,247,242,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 0;}
+[data-theme="dark"] .navbar.scrolled{background:rgba(17,16,8,0.97);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:3px;color:var(--ink);}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);transition:var(--transition);}
+.nav-links a:hover{color:var(--gold);}
+.nav-actions{display:flex;align-items:center;gap:16px;}
+.nav-icon-btn{background:none;border:1px solid var(--border);color:var(--ink);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--transition);position:relative;}
+.nav-icon-btn:hover{border-color:var(--gold);color:var(--gold);}
+.cart-count{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;}
+.hamburger span{width:24px;height:1.5px;background:var(--ink);transition:var(--transition);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;background:var(--cream);position:relative;overflow:hidden;padding-top:80px;}
+.hero-bg-text{position:absolute;font-family:var(--font-display);font-size:28vw;font-weight:700;color:rgba(201,168,76,0.05);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;letter-spacing:-5px;pointer-events:none;user-select:none;}
+.hero-inner{max-width:1280px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold);}
+.hero-eyebrow span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.hero-title{font-family:var(--font-display);font-size:clamp(52px,6vw,96px);font-weight:300;line-height:0.95;color:var(--ink);margin-bottom:28px;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-title strong{font-weight:700;}
+.hero-desc{font-size:15px;color:var(--stone);line-height:1.9;max-width:420px;margin-bottom:40px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:#fff;padding:14px 32px;border:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;}
+.btn-gold:hover{background:#B8963E;transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.35);}
+.btn-outline-gold{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:14px 32px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;}
+.btn-outline-gold:hover{background:var(--gold);color:#fff;}
+.hero-image-stack{position:relative;height:580px;}
+.hero-img-main{position:absolute;right:0;top:0;width:75%;height:500px;object-fit:cover;box-shadow:32px 32px 0 var(--gold-light);}
+.hero-img-accent{position:absolute;left:0;bottom:0;width:55%;height:320px;object-fit:cover;border:4px solid var(--white);box-shadow:0 20px 60px rgba(0,0,0,0.12);}
+.hero-badge{position:absolute;right:0;bottom:40px;background:var(--ink);color:#fff;padding:20px 24px;font-family:var(--font-display);}
+.hero-badge .num{font-size:42px;font-weight:700;line-height:1;color:var(--gold);}
+.hero-badge .lbl{font-size:12px;letter-spacing:2px;opacity:.7;text-transform:uppercase;}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--stone);font-size:10px;letter-spacing:3px;text-transform:uppercase;}
+.hero-scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 1.8s ease-in-out infinite;}
+@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--ink);padding:16px 0;overflow:hidden;}
+.marquee-track{display:flex;gap:0;animation:marquee 25s linear infinite;}
+.marquee-item{white-space:nowrap;padding:0 40px;font-family:var(--font-display);font-size:18px;color:var(--gold-light);letter-spacing:2px;}
+.marquee-item span{color:var(--gold);margin:0 20px;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION HEADERS ── */
+.sec-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sec-eyebrow::before{content:'';width:30px;height:1px;background:var(--gold);}
+.sec-title{font-family:var(--font-display);font-size:clamp(36px,4vw,64px);font-weight:300;color:var(--ink);line-height:1;margin-bottom:16px;}
+.sec-title em{font-style:italic;color:var(--gold);}
+.sec-sub{font-size:15px;color:var(--stone);line-height:1.8;max-width:500px;}
+
+/* ── SHOP PAGE ── */
+.page{display:none;padding-top:100px;min-height:100vh;}
+.page.active{display:block;}
+.shop-wrap{max-width:1280px;margin:0 auto;padding:40px 40px 80px;}
+.shop-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.shop-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px;}
+.filter-chip{background:transparent;border:1px solid var(--border);color:var(--stone);padding:8px 20px;font-size:12px;letter-spacing:1px;text-transform:uppercase;transition:var(--transition);}
+.filter-chip.active,.filter-chip:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.06);}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:32px;}
+.product-card{background:var(--card);cursor:pointer;transition:var(--transition);border:1px solid var(--border);overflow:hidden;}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,0.1);}
+.product-img{position:relative;aspect-ratio:3/4;overflow:hidden;background:#F0EBE3;}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.product-card:hover .product-img img{transform:scale(1.06);}
+.product-badge{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;font-weight:600;}
+.product-wishlist{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.9);border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--stone);transition:var(--transition);opacity:0;}
+.product-card:hover .product-wishlist{opacity:1;}
+.product-wishlist:hover,.product-wishlist.active{color:var(--rust);}
+.product-info{padding:20px;}
+.product-cat{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.product-name{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.2;}
+.product-size{font-size:12px;color:var(--stone);margin-bottom:12px;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);}
+.add-cart-btn{background:var(--ink);color:#fff;border:none;padding:9px 18px;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;transition:var(--transition);}
+.add-cart-btn:hover{background:var(--gold);}
+
+/* ── PRODUCT DETAIL ── */
+.product-detail-wrap{max-width:1280px;margin:0 auto;padding:40px 40px 80px;}
+.product-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.detail-img-main{width:100%;aspect-ratio:3/4;object-fit:cover;background:#F0EBE3;}
+.detail-thumbs{display:flex;gap:10px;margin-top:12px;}
+.detail-thumb{width:70px;height:90px;object-fit:cover;border:2px solid transparent;cursor:pointer;transition:var(--transition);}
+.detail-thumb.active,.detail-thumb:hover{border-color:var(--gold);}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--stone);font-size:13px;margin-bottom:32px;transition:var(--transition);}
+.back-btn:hover{color:var(--gold);}
+.detail-cat{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.detail-title{font-family:var(--font-display);font-size:clamp(36px,4vw,56px);font-weight:300;color:var(--ink);line-height:1.05;margin-bottom:6px;}
+.detail-title em{font-style:italic;}
+.detail-price{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--ink);margin:16px 0;}
+.detail-desc{font-size:14px;color:var(--stone);line-height:1.9;margin-bottom:28px;border-top:1px solid var(--border);padding-top:24px;}
+.size-select-wrap{margin-bottom:24px;}
+.size-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:10px;display:block;}
+.size-options{display:flex;gap:8px;flex-wrap:wrap;}
+.size-opt{border:1px solid var(--border);background:none;color:var(--ink);padding:8px 16px;font-size:13px;transition:var(--transition);cursor:pointer;}
+.size-opt.active,.size-opt:hover{border-color:var(--gold);color:var(--gold);}
+.qty-row{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
+.qty-box{display:flex;align-items:center;border:1px solid var(--border);}
+.qty-btn{background:none;border:none;width:40px;height:40px;font-size:18px;color:var(--ink);transition:var(--transition);}
+.qty-btn:hover{color:var(--gold);}
+.qty-num{width:50px;text-align:center;font-size:16px;font-weight:600;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);height:40px;background:none;color:var(--ink);}
+.detail-btns{display:flex;gap:12px;margin-bottom:28px;}
+.detail-btns .btn-gold{flex:1;justify-content:center;}
+.detail-features{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--border);padding-top:24px;}
+.detail-feature{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--stone);}
+.detail-feature i{color:var(--gold);font-size:16px;}
+
+/* ── CART SIDEBAR ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s;}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-sidebar{position:fixed;top:0;right:-480px;width:460px;max-width:100vw;height:100vh;background:var(--white);z-index:2001;transition:right .35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;}
+.cart-sidebar.open{right:0;}
+.cart-head{padding:28px 32px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.cart-head h3{font-family:var(--font-display);font-size:28px;font-weight:600;}
+.cart-close{background:none;border:none;font-size:22px;color:var(--stone);transition:var(--transition);}
+.cart-close:hover{color:var(--ink);}
+.cart-items{flex:1;overflow-y:auto;padding:24px 32px;}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--stone);}
+.cart-empty i{font-size:48px;color:var(--border);margin-bottom:16px;display:block;}
+.cart-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);}
+.cart-item-img{width:80px;height:100px;object-fit:cover;flex-shrink:0;background:#F0EBE3;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-family:var(--font-display);font-size:18px;font-weight:600;line-height:1.2;margin-bottom:4px;}
+.cart-item-meta{font-size:12px;color:var(--stone);margin-bottom:10px;}
+.cart-item-row{display:flex;align-items:center;justify-content:space-between;}
+.cart-item-price{font-weight:700;font-size:16px;}
+.cart-remove{background:none;border:none;color:var(--stone);font-size:14px;transition:var(--transition);}
+.cart-remove:hover{color:var(--rust);}
+.cart-footer{padding:24px 32px;border-top:1px solid var(--border);}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.cart-total-label{font-size:13px;color:var(--stone);text-transform:uppercase;letter-spacing:1px;}
+.cart-total-amount{font-family:var(--font-display);font-size:32px;font-weight:700;}
+.checkout-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:16px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:var(--transition);}
+.checkout-btn:hover{background:var(--gold);}
+
+/* ── AUTH MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);width:100%;max-width:480px;padding:48px;position:relative;}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;font-size:22px;color:var(--stone);}
+.modal-close:hover{color:var(--ink);}
+.modal-logo{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:3px;margin-bottom:32px;color:var(--ink);}
+.modal-logo span{color:var(--gold);}
+.modal-tabs{display:flex;gap:0;margin-bottom:36px;border-bottom:2px solid var(--border);}
+.modal-tab{flex:1;background:none;border:none;padding:12px;font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--stone);border-bottom:2px solid transparent;margin-bottom:-2px;transition:var(--transition);}
+.modal-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.auth-form{display:none;}
+.auth-form.active{display:block;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);margin-bottom:8px;font-weight:600;}
+.form-input{width:100%;padding:13px 16px;border:1px solid var(--border);background:var(--cream);color:var(--ink);font-size:14px;font-family:var(--font-body);outline:none;transition:var(--transition);}
+.form-input:focus{border-color:var(--gold);}
+.auth-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:15px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:var(--transition);margin-top:8px;}
+.auth-btn:hover{background:var(--gold);}
+.auth-divider{text-align:center;color:var(--stone);font-size:12px;margin:20px 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border);}
+.auth-divider::before{left:0;}
+.auth-divider::after{right:0;}
+.auth-social-btn{width:100%;border:1px solid var(--border);background:none;color:var(--ink);padding:12px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:10px;transition:var(--transition);font-weight:500;}
+.auth-social-btn:hover{border-color:var(--gold);}
+
+/* ── CHECKOUT PAGE ── */
+.checkout-wrap{max-width:1100px;margin:0 auto;padding:40px 40px 80px;}
+.checkout-grid{display:grid;grid-template-columns:1fr 400px;gap:60px;}
+.checkout-section-title{font-family:var(--font-display);font-size:28px;font-weight:600;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.payment-methods{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+.pay-method{flex:1;min-width:120px;border:2px solid var(--border);padding:16px 12px;text-align:center;cursor:pointer;transition:var(--transition);}
+.pay-method.active,.pay-method:hover{border-color:var(--gold);}
+.pay-method i{font-size:24px;color:var(--gold);margin-bottom:6px;display:block;}
+.pay-method span{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.bank-details{background:var(--cream);border:1px solid var(--border);padding:24px;margin-bottom:24px;}
+.bank-detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.bank-detail-row:last-child{border:none;}
+.bank-detail-row strong{color:var(--ink);}
+.order-summary{background:var(--card);border:1px solid var(--border);padding:32px;}
+.order-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
+.order-item-img{width:60px;height:75px;object-fit:cover;background:#F0EBE3;flex-shrink:0;}
+.order-item-name{font-family:var(--font-display);font-size:16px;font-weight:600;}
+.order-item-meta{font-size:12px;color:var(--stone);}
+.order-item-price{margin-left:auto;font-weight:700;font-size:15px;flex-shrink:0;}
+.order-totals{margin-top:20px;}
+.order-total-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;color:var(--stone);}
+.order-total-row.grand{font-size:20px;font-weight:700;color:var(--ink);border-top:2px solid var(--border);margin-top:8px;padding-top:16px;}
+.order-total-row.grand span:last-child{font-family:var(--font-display);}
+.place-order-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:17px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-top:24px;transition:var(--transition);}
+.place-order-btn:hover{background:#B8963E;box-shadow:0 8px 24px rgba(201,168,76,.4);}
+
+/* ── ACCOUNT PAGE ── */
+.account-wrap{max-width:1100px;margin:0 auto;padding:40px 40px 80px;}
+.account-grid{display:grid;grid-template-columns:260px 1fr;gap:40px;}
+.account-sidebar{background:var(--card);border:1px solid var(--border);padding:32px;height:fit-content;}
+.account-avatar{width:72px;height:72px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:28px;color:#fff;font-weight:700;margin-bottom:16px;}
+.account-name{font-family:var(--font-display);font-size:22px;font-weight:600;margin-bottom:4px;}
+.account-email{font-size:13px;color:var(--stone);margin-bottom:24px;}
+.account-nav{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.account-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:14px;font-weight:500;color:var(--stone);transition:var(--transition);border-left:2px solid transparent;}
+.account-nav li a:hover,.account-nav li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.05);}
+.account-panel{display:none;}
+.account-panel.active{display:block;}
+.account-panel-title{font-family:var(--font-display);font-size:36px;font-weight:300;margin-bottom:8px;}
+.account-panel-title em{font-style:italic;color:var(--gold);}
+.orders-table{width:100%;border-collapse:collapse;margin-top:24px;}
+.orders-table th{text-align:left;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--stone);padding:12px 16px;border-bottom:2px solid var(--border);font-weight:600;}
+.orders-table td{padding:16px;border-bottom:1px solid var(--border);font-size:14px;}
+.order-status{display:inline-block;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.status-pending{background:rgba(201,168,76,.15);color:#A07830;}
+.status-delivered{background:rgba(34,197,94,.1);color:#166534;}
+.status-processing{background:rgba(59,130,246,.1);color:#1D4ED8;}
+.logout-btn{background:none;border:1px solid var(--border);color:var(--stone);padding:10px 20px;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:var(--transition);width:100%;margin-top:24px;}
+.logout-btn:hover{border-color:var(--rust);color:var(--rust);}
+
+/* ── ORDER SUCCESS ── */
+.success-wrap{max-width:600px;margin:0 auto;padding:80px 40px;text-align:center;}
+.success-icon{width:80px;height:80px;background:rgba(201,168,76,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--gold);margin:0 auto 32px;}
+.success-title{font-family:var(--font-display);font-size:52px;font-weight:300;margin-bottom:16px;}
+.success-title em{font-style:italic;color:var(--gold);}
+
+/* ── FOOTER ── */
+.footer{background:var(--ink);color:rgba(255,255,255,.55);padding:70px 0 30px;}
+[data-theme="dark"] .footer{background:#060600;}
+.footer-inner{max-width:1280px;margin:0 auto;padding:0 40px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:50px;}
+.footer-brand h3{font-family:var(--font-display);font-size:30px;letter-spacing:3px;color:#fff;margin-bottom:14px;}
+.footer-brand h3 span{color:var(--gold);}
+.footer-brand p{font-size:13px;line-height:1.9;max-width:240px;}
+.footer-col h4{color:#fff;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col ul a{font-size:13px;transition:var(--transition);}
+.footer-col ul a:hover{color:var(--gold);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.footer-bottom span{color:var(--gold);}
+
+/* ── FEATURED SECTION ── */
+.featured{padding:100px 0;background:var(--cream);}
+.featured-inner{max-width:1280px;margin:0 auto;padding:0 40px;}
+.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+
+/* ── WHY US ── */
+.why-section{background:var(--ink);padding:100px 0;}
+.why-inner{max-width:1280px;margin:0 auto;padding:0 40px;}
+.why-inner .sec-title,.why-inner .sec-eyebrow{color:#fff;}
+.why-inner .sec-eyebrow{color:var(--gold);}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px;}
+.why-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px 28px;transition:var(--transition);}
+.why-item:hover{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.2);}
+.why-item i{font-size:28px;color:var(--gold);margin-bottom:20px;display:block;}
+.why-item h3{color:#fff;font-size:16px;font-weight:600;margin-bottom:10px;}
+.why-item p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.8;}
+
+/* ── MOBILE ── */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:50px;padding-top:40px;}
+  .hero-image-stack{height:420px;}
+  .product-detail-grid{grid-template-columns:1fr;}
+  .checkout-grid{grid-template-columns:1fr;}
+  .account-grid{grid-template-columns:1fr;}
+  .featured-grid{grid-template-columns:repeat(2,1fr);}
+  .why-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .nav-inner{padding:0 20px;}
+  .hero-inner{padding:20px 20px 0;}
+  .shop-wrap,.product-detail-wrap,.checkout-wrap,.account-wrap{padding:20px 20px 60px;}
+  .featured-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .modal{padding:32px 24px;}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')" style="cursor:pointer">PHIAQ<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home');return false;">Home</a></li>
+      <li><a href="#" onclick="showPage('shop');return false;">Shop</a></li>
+      <li><a href="#featured">Featured</a></li>
+      <li><a href="#why">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" onclick="toggleCart()" title="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/></svg></i>
+        <div class="cart-count" id="cartCount" style="display:none">0</div>
+      </button>
+      <button class="nav-icon-btn" id="authBtn" onclick="openAuth()" title="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg></i>
+      </button>
+      <button class="nav-icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HOME PAGE ── -->
+<div class="page active" id="page-home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-text">ART</div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow"><span>Premium Framed Artworks</span></div>
+        <h1 class="hero-title">
+          <em>Art that</em><br>
+          <strong>speaks to</strong><br>
+          your walls.
+        </h1>
+        <p class="hero-desc">Curated framed artworks and prints, handpicked for homes, offices, and spaces that deserve something extraordinary.</p>
+        <div class="hero-btns">
+          <button class="btn-gold" onclick="showPage('shop')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/></svg></i> Shop Collection</button>
+          <button class="btn-outline-gold" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">View Featured</button>
+        </div>
+      </div>
+      <div class="hero-image-stack">
+        <!-- Replace these with your actual artwork images -->
+        <img class="hero-img-main" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=85" alt="Featured artwork" />
+        <img class="hero-img-accent" src="https://images.unsplash.com/photo-1549887534-1541e9326642?w=600&q=85" alt="Framed art" />
+        <div class="hero-badge">
+          <div class="num">50+</div>
+          <div class="lbl">Artworks<br>Available</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll"><div class="hero-scroll-line"></div>scroll</div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+      <span class="marquee-item">Framed Prints <span>✦</span></span>
+      <span class="marquee-item">Original Artworks <span>✦</span></span>
+      <span class="marquee-item">Canvas Prints <span>✦</span></span>
+      <span class="marquee-item">Abstract Art <span>✦</span></span>
+      <span class="marquee-item">Portrait Art <span>✦</span></span>
+      <span class="marquee-item">Landscape Art <span>✦</span></span>
+      <span class="marquee-item">Custom Orders <span>✦</span></span>
+      <span class="marquee-item">Fast Delivery <span>✦</span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Framed Prints <span>✦</span></span>
+      <span class="marquee-item">Original Artworks <span>✦</span></span>
+      <span class="marquee-item">Canvas Prints <span>✦</span></span>
+      <span class="marquee-item">Abstract Art <span>✦</span></span>
+      <span class="marquee-item">Portrait Art <span>✦</span></span>
+      <span class="marquee-item">Landscape Art <span>✦</span></span>
+      <span class="marquee-item">Custom Orders <span>✦</span></span>
+      <span class="marquee-item">Fast Delivery <span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- Featured Section -->
+  <section class="featured" id="featured">
+    <div class="featured-inner">
+      <div class="sec-eyebrow">New Arrivals</div>
+      <h2 class="sec-title">Featured <em>Collection</em></h2>
+      <div class="featured-grid" id="featuredGrid"></div>
+      <div style="text-align:center;margin-top:48px">
+        <button class="btn-outline-gold" onclick="showPage('shop')">View All Artworks <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section class="why-section" id="why">
+    <div class="why-inner">
+      <div class="sec-eyebrow" style="color:var(--gold)">Why Choose Us</div>
+      <h2 class="sec-title" style="color:#fff">The <em>Phiaq</em> Promise</h2>
+      <div class="why-grid">
+        <div class="why-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"/><path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z"/></svg></i>
+          <h3>Premium Quality</h3>
+          <p>Every artwork is carefully framed using high-quality materials that preserve and enhance its beauty for years.</p>
+        </div>
+        <div class="why-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg></i>
+          <h3>Fast Delivery</h3>
+          <p>Orders are processed promptly and delivered securely to your doorstep anywhere in Nigeria.</p>
+        </div>
+        <div class="why-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/></svg></i>
+          <h3>Secure Packaging</h3>
+          <p>All artworks are carefully wrapped and packaged to ensure they arrive in perfect condition.</p>
+        </div>
+        <div class="why-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/></svg></i>
+          <h3>Easy Returns</h3>
+          <p>Not satisfied? We offer a hassle-free return policy because your happiness matters most.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── SHOP PAGE ── -->
+<div class="page" id="page-shop">
+  <div class="shop-wrap">
+    <div class="shop-header">
+      <div>
+        <div class="sec-eyebrow">Our Collection</div>
+        <h1 class="sec-title">Shop <em>Artworks</em></h1>
+      </div>
+      <p style="font-size:13px;color:var(--stone)" id="shopCount">Loading...</p>
+    </div>
+    <div class="shop-filters" id="shopFilters"></div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</div>
+
+<!-- ── PRODUCT DETAIL PAGE ── -->
+<div class="page" id="page-detail">
+  <div class="product-detail-wrap">
+    <button class="back-btn" onclick="goBack()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></svg></i> Back to Shop</button>
+    <div class="product-detail-grid">
+      <div>
+        <img class="detail-img-main" id="detailImgMain" src="" alt=""/>
+        <div class="detail-thumbs" id="detailThumbs"></div>
+      </div>
+      <div>
+        <div class="detail-cat" id="detailCat"></div>
+        <h1 class="detail-title" id="detailTitle"></h1>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="color:var(--gold);font-size:14px">★★★★★</div>
+          <div style="font-size:13px;color:var(--stone)" id="detailReviews"></div>
+        </div>
+        <div class="detail-price" id="detailPrice"></div>
+        <p class="detail-desc" id="detailDesc"></p>
+        <div class="size-select-wrap">
+          <span class="size-label">Frame Size</span>
+          <div class="size-options" id="detailSizes"></div>
+        </div>
+        <div class="qty-row">
+          <span class="size-label" style="margin:0">Quantity</span>
+          <div class="qty-box">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input class="qty-num" type="number" value="1" min="1" id="detailQty" readonly/>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="detail-btns">
+          <button class="btn-gold" onclick="addToCartFromDetail()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5"/><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/></svg></i> Add to Cart</button>
+          <button class="btn-outline-gold" onclick="buyNow()">Buy Now</button>
+        </div>
+        <div class="detail-features">
+          <div class="detail-feature"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/></svg></i> Genuine framed artwork guaranteed</div>
+          <div class="detail-feature"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg></i> Nationwide delivery available</div>
+          <div class="detail-feature"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/></svg></i> Secure packaging on all orders</div>
+          <div class="detail-feature"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg></i> WhatsApp support available</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CHECKOUT PAGE ── -->
+<div class="page" id="page-checkout">
+  <div class="checkout-wrap">
+    <button class="back-btn" onclick="showPage('shop')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></svg></i> Continue Shopping</button>
+    <div class="checkout-grid">
+      <div>
+        <h2 class="checkout-section-title">Delivery Details</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group"><label>First Name</label><input class="form-input" placeholder="John" id="co-fname"/></div>
+          <div class="form-group"><label>Last Name</label><input class="form-input" placeholder="Doe" id="co-lname"/></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input class="form-input" type="email" placeholder="john@email.com" id="co-email"/></div>
+        <div class="form-group"><label>Phone Number</label><input class="form-input" placeholder="+234 000 000 0000" id="co-phone"/></div>
+        <div class="form-group"><label>Delivery Address</label><input class="form-input" placeholder="House number, street name" id="co-address"/></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group"><label>City</label><input class="form-input" placeholder="Lagos" id="co-city"/></div>
+          <div class="form-group"><label>State</label>
+            <select class="form-input" id="co-state">
+              <option>Select state...</option>
+              <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option><option>Anambra</option>
+              <option>Bauchi</option><option>Bayelsa</option><option>Benue</option><option>Borno</option>
+              <option>Cross River</option><option>Delta</option><option>Ebonyi</option><option>Edo</option>
+              <option>Ekiti</option><option>Enugu</option><option>Gombe</option><option>Imo</option>
+              <option>Jigawa</option><option>Kaduna</option><option>Kano</option><option>Katsina</option>
+              <option>Kebbi</option><option>Kogi</option><option>Kwara</option><option selected>Lagos</option>
+              <option>Nasarawa</option><option>Niger</option><option>Ogun</option><option>Ondo</option>
+              <option>Osun</option><option>Oyo</option><option>Plateau</option><option>Rivers</option>
+              <option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option><option>FCT</option>
+            </select>
+          </div>
+        </div>
+        <h2 class="checkout-section-title" style="margin-top:40px">Payment Method</h2>
+
+        <!-- Payment gateway selector -->
+        <div class="payment-methods">
+          <div class="pay-method active" id="pm-paystack" onclick="selectPayMethod('paystack')">
+            <img src="https://website-v3-assets.s3.amazonaws.com/assets/img/hero/Paystack-mark-white-twitter.png" style="width:28px;height:28px;object-fit:contain;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+            <svg style="display:none;font-size:24px;color:var(--gold);margin-bottom:6px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 10h3a1 1 0 0 1 0 2H2a1 1 0 0 1 0-2"/></svg></i>
+            <span>Paystack</span>
+            <div style="font-size:10px;color:var(--stone);margin-top:4px;letter-spacing:0">Card · Transfer · USSD</div>
+          </div>
+          <div class="pay-method" id="pm-flutterwave" onclick="selectPayMethod('flutterwave')">
+            <img src="https://res.cloudinary.com/flutterwave/image/upload/v1652871560/FW%20BRAND%20ASSETS/Symbol/SVG/Flutterwave%20Symbol%20-%20Primary%20Color.svg" style="width:28px;height:28px;object-fit:contain;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+            <svg style="display:none;font-size:24px;color:var(--gold);margin-bottom:6px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41z"/></svg></i>
+            <span>Flutterwave</span>
+            <div style="font-size:10px;color:var(--stone);margin-top:4px;letter-spacing:0">Card · Transfer · Mobile Money</div>
+          </div>
+        </div>
+
+        <!-- Security badge -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;padding:12px 16px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:4px;">
+          <svg style="color:#16A34A;font-size:18px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5"/></svg></i>
+          <p style="font-size:12px;color:#15803D;line-height:1.6;margin:0;">Your payment is <strong>encrypted and secure</strong>. We never store your card details. Powered by PCI-DSS compliant payment gateways.</p>
+        </div>
+
+        <!-- Paystack info panel -->
+        <div id="paystack-wrap">
+          <div style="background:var(--cream);border:1px solid var(--border);padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <svg style="color:var(--gold);font-size:16px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg></i>
+              <span style="font-size:13px;font-weight:600;color:var(--ink);">How Paystack works</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M9.283 4.002H7.971L6.072 5.385v1.271l1.834-1.318h.065V11h1.312z"/></svg></i>
+                Click <strong style="color:var(--ink)">"Pay with Paystack"</strong> — a secure popup opens
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V11H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306"/></svg></i>
+                Pay with <strong style="color:var(--ink)">Card, Bank Transfer, or USSD</strong>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-8.082.414c.92 0 1.399.54 1.399 1.簡single = 1.203 0 1.667-.61 1.667-1.354 0-.664-.475-1.245-1.36-1.245-.12 0-.258.015-.404.048V6.758c.108.026.224.04.354.04.88 0 1.302-.538 1.302-1.195 0-.747-.564-1.158-1.302-1.158-.856 0-1.372.516-1.403 1.322H5.983c.04-1.381 1.01-2.32 2.568-2.32 1.493 0 2.616.847 2.616 2.1 0 .932-.517 1.571-1.283 1.79v.05c.95.158 1.565.848 1.565 1.887 0 1.35-1.065 2.272-2.745 2.272-1.6 0-2.707-.895-2.768-2.315h1.29c.056.736.584 1.23 1.478 1.23"/></svg></i>
+                Order is <strong style="color:var(--ink)">automatically confirmed</strong> on success
+              </div>
+            </div>
+          </div>
+          <!-- IMPORTANT: Replace with your actual Paystack public key below -->
+          <input type="hidden" id="paystackKey" value="pk_live_YOUR_PAYSTACK_PUBLIC_KEY_HERE"/>
+          <p style="font-size:11px;color:var(--stone);margin-bottom:4px;">💡 <em>Replace <code>pk_live_YOUR_PAYSTACK_PUBLIC_KEY_HERE</code> in the HTML with your key from <strong>paystack.com/dashboard → Settings → API Keys</strong></em></p>
+        </div>
+
+        <!-- Flutterwave info panel -->
+        <div id="flutterwave-wrap" style="display:none;">
+          <div style="background:var(--cream);border:1px solid var(--border);padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <svg style="color:var(--gold);font-size:16px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg></i>
+              <span style="font-size:13px;font-weight:600;color:var(--ink);">How Flutterwave works</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M9.283 4.002H7.971L6.072 5.385v1.271l1.834-1.318h.065V11h1.312z"/></svg></i>
+                Click <strong style="color:var(--ink)">"Pay with Flutterwave"</strong> — a secure popup opens
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V11H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306"/></svg></i>
+                Pay with <strong style="color:var(--ink)">Card, Bank Transfer, or Mobile Money</strong>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--stone);">
+                <svg style="color:var(--gold);flex-shrink:0;margin-top:1px;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-8.082.414c.92 0 1.399.54 1.399 1.簡single = 1.203 0 1.667-.61 1.667-1.354 0-.664-.475-1.245-1.36-1.245-.12 0-.258.015-.404.048V6.758c.108.026.224.04.354.04.88 0 1.302-.538 1.302-1.195 0-.747-.564-1.158-1.302-1.158-.856 0-1.372.516-1.403 1.322H5.983c.04-1.381 1.01-2.32 2.568-2.32 1.493 0 2.616.847 2.616 2.1 0 .932-.517 1.571-1.283 1.79v.05c.95.158 1.565.848 1.565 1.887 0 1.35-1.065 2.272-2.745 2.272-1.6 0-2.707-.895-2.768-2.315h1.29c.056.736.584 1.23 1.478 1.23"/></svg></i>
+                Order is <strong style="color:var(--ink)">automatically confirmed</strong> on success
+              </div>
+            </div>
+          </div>
+          <!-- IMPORTANT: Replace with your actual Flutterwave public key below -->
+          <input type="hidden" id="flutterwaveKey" value="FLWPUBK_YOUR_FLUTTERWAVE_PUBLIC_KEY_HERE"/>
+          <p style="font-size:11px;color:var(--stone);margin-bottom:4px;">💡 <em>Replace <code>FLWPUBK_YOUR_FLUTTERWAVE_PUBLIC_KEY_HERE</code> with your key from <strong>dashboard.flutterwave.com → Settings → API Keys</strong></em></p>
+        </div>
+      </div>
+      <!-- Order Summary -->
+      <div>
+        <div class="order-summary">
+          <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)">Order Summary</h3>
+          <div id="checkoutItems"></div>
+          <div class="order-totals">
+            <div class="order-total-row"><span>Subtotal</span><span id="coSubtotal">₦0</span></div>
+            <div class="order-total-row"><span>Delivery</span><span>₦2,500</span></div>
+            <div class="order-total-row grand"><span>Total</span><span id="coTotal">₦0</span></div>
+          </div>
+          <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/></svg></i> <span id="payBtnLabel">Pay with Paystack</span></button>
+          <p style="font-size:11px;color:var(--stone);text-align:center;margin-top:10px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/></svg></i> Secured by 256-bit SSL encryption</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ORDER SUCCESS ── -->
+<div class="page" id="page-success">
+  <div class="success-wrap">
+    <div class="success-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></i></div>
+    <h1 class="success-title">Order <em>Placed!</em></h1>
+    <p style="font-size:15px;color:var(--stone);line-height:1.9;margin-bottom:8px">Your payment was confirmed and your order is now being processed.</p>
+    <p style="font-size:14px;color:var(--stone);margin-bottom:32px" id="successOrderNum"></p>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;text-align:left;">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);">
+        <svg style="color:#16A34A;font-size:20px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg></i>
+        <span style="font-size:14px;color:var(--ink);">Payment received & confirmed automatically</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--cream);border:1px solid var(--border);">
+        <svg style="color:var(--gold);font-size:20px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z"/><path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686"/></svg></i>
+        <span style="font-size:14px;color:var(--ink);">A confirmation email has been sent to <strong id="successEmail"></strong></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--cream);border:1px solid var(--border);">
+        <svg style="color:var(--gold);font-size:20px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg></i>
+        <span style="font-size:14px;color:var(--ink);">Your artwork will be packaged and dispatched within 24–48 hours</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-gold" onclick="showPage('account')">View My Orders</button>
+      <button class="btn-outline-gold" onclick="showPage('shop')">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── ACCOUNT PAGE ── -->
+<div class="page" id="page-account">
+  <div class="account-wrap">
+    <div class="account-grid" id="accountGrid">
+      <div class="account-sidebar">
+        <div class="account-avatar" id="accountAvatar">F</div>
+        <div class="account-name" id="accountName">Guest</div>
+        <div class="account-email" id="accountEmail">Not logged in</div>
+        <ul class="account-nav">
+          <li><a href="#" class="active" onclick="switchPanel('orders');return false;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/></svg></i> My Orders</a></li>
+          <li><a href="#" onclick="switchPanel('wishlist');return false;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg></i> Wishlist</a></li>
+          <li><a href="#" onclick="switchPanel('profile');return false;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg></i> Profile</a></li>
+          <li><a href="#" onclick="switchPanel('address');return false;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/><path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg></i> Addresses</a></li>
+        </ul>
+        <button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/><path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/></svg></i> Sign Out</button>
+      </div>
+      <div>
+        <!-- Orders Panel -->
+        <div class="account-panel active" id="panel-orders">
+          <h2 class="account-panel-title">My <em>Orders</em></h2>
+          <div id="ordersContent"></div>
+        </div>
+        <!-- Wishlist Panel -->
+        <div class="account-panel" id="panel-wishlist">
+          <h2 class="account-panel-title">My <em>Wishlist</em></h2>
+          <div class="products-grid" id="wishlistGrid" style="margin-top:24px"></div>
+        </div>
+        <!-- Profile Panel -->
+        <div class="account-panel" id="panel-profile">
+          <h2 class="account-panel-title">My <em>Profile</em></h2>
+          <div style="max-width:500px;margin-top:24px">
+            <div class="form-group"><label>Full Name</label><input class="form-input" id="profileName"/></div>
+            <div class="form-group"><label>Email</label><input class="form-input" id="profileEmail" type="email"/></div>
+            <div class="form-group"><label>Phone</label><input class="form-input" id="profilePhone"/></div>
+            <button class="btn-gold" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+        <!-- Address Panel -->
+        <div class="account-panel" id="panel-address">
+          <h2 class="account-panel-title">My <em>Addresses</em></h2>
+          <div style="max-width:500px;margin-top:24px">
+            <div class="form-group"><label>Default Address</label><input class="form-input" id="profileAddress" placeholder="Your delivery address"/></div>
+            <div class="form-group"><label>City</label><input class="form-input" id="profileCity"/></div>
+            <div class="form-group"><label>State</label><input class="form-input" id="profileState"/></div>
+            <button class="btn-gold" onclick="saveProfile()">Save Address</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>PHIAQ<span>.</span></h3>
+        <p>Premium framed artworks and prints for homes, offices, and spaces that deserve extraordinary art.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('shop');return false;">All Artworks</a></li>
+          <li><a href="#" onclick="showPage('shop');return false;">Abstract</a></li>
+          <li><a href="#" onclick="showPage('shop');return false;">Portraits</a></li>
+          <li><a href="#" onclick="showPage('shop');return false;">Landscapes</a></li>
+          <li><a href="#" onclick="showPage('shop');return false;">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/2348096617516" target="_blank">WhatsApp: +234 809 661 7516</a></li>
+          <li><a href="mailto:atoyimifiyacksegbezun@gmail.com">Send Email</a></li>
+          <li><a href="#">Instagram: @atoy_fiyack</a></li>
+          <li><a href="#">Facebook: Fiyack Segbezun</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="footerYear"></span> <span>Phiaq Art Store</span>. All rights reserved.</p>
+      <p>Managed by <span>Fiyack Atoyimi S.</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/2348096617516?text=Hello%2C%20I%20found%20Phiaq%20Art%20Store%20and%20would%20like%20to%20order%20an%20artwork." target="_blank" style="position:fixed;bottom:30px;right:30px;z-index:900;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 6px 24px rgba(37,211,102,.45);animation:waPulse 2.5s ease-in-out infinite;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg></i>
+</a>
+<style>@keyframes waPulse{0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.45)}50%{box-shadow:0 6px 36px rgba(37,211,102,.7)}}</style>
+
+<!-- ── CART SIDEBAR ── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Your Bag</h3>
+    <button class="cart-close" onclick="toggleCart()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></svg></i></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">₦0</span>
+    </div>
+    <button class="checkout-btn" onclick="goCheckout()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0"/><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/></svg></i> Checkout</button>
+  </div>
+</div>
+
+<!-- ── AUTH MODAL ── -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></svg></i></button>
+    <div class="modal-logo">PHIAQ<span>.</span></div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+    </div>
+    <!-- LOGIN -->
+    <div class="auth-form active" id="form-login">
+      <div class="form-group"><label>Email Address</label><input class="form-input" type="email" id="loginEmail" placeholder="your@email.com"/></div>
+      <div class="form-group"><label>Password</label><input class="form-input" type="password" id="loginPass" placeholder="••••••••"/></div>
+      <button class="auth-btn" onclick="doLogin()">Sign In</button>
+      <div class="auth-divider">or</div>
+      <button class="auth-social-btn"><svg style="color:#EA4335" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/></svg></i> Continue with Google</button>
+    </div>
+    <!-- SIGNUP -->
+    <div class="auth-form" id="form-signup">
+      <div class="form-group"><label>Full Name</label><input class="form-input" id="signupName" placeholder="Your full name"/></div>
+      <div class="form-group"><label>Email Address</label><input class="form-input" type="email" id="signupEmail" placeholder="your@email.com"/></div>
+      <div class="form-group"><label>Password</label><input class="form-input" type="password" id="signupPass" placeholder="Create a password (min. 6 chars)"/></div>
+      <div class="form-group"><label>Phone Number</label><input class="form-input" id="signupPhone" placeholder="+234 000 000 0000"/></div>
+      <button class="auth-btn" onclick="doSignup()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Paystack SDK -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<!-- Flutterwave SDK -->
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+
+<script>
+// ═══════════════════════════════════
+// DATA — Add/edit products here
+// ═══════════════════════════════════
+const PRODUCTS = [
+  {
+    id:1, name:"Golden Serenity", category:"Abstract",
+    price:45000, sizes:['A4','A3','A2','A1'],
+    desc:"A breathtaking abstract composition in warm golds and deep earthy tones, beautifully framed in a premium black frame. Perfect for living rooms and executive offices.",
+    images:["https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=85","https://images.unsplash.com/photo-1549887534-1541e9326642?w=600&q=85"],
+    reviews:24, badge:"New"
+  },
+  {
+    id:2, name:"Midnight Blues", category:"Abstract",
+    price:38000, sizes:['A4','A3','A2'],
+    desc:"Deep ocean blues and midnight hues converge in this stunning abstract piece. A statement artwork for modern interiors.",
+    images:["https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=85"],
+    reviews:18
+  },
+  {
+    id:3, name:"The Regal Portrait", category:"Portrait",
+    price:65000, sizes:['A3','A2','A1'],
+    desc:"A commanding portrait artwork with rich, dramatic tones. Framed in a classic gold frame that commands attention in any room.",
+    images:["https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=85"],
+    reviews:31, badge:"Bestseller"
+  },
+  {
+    id:4, name:"Nature's Grace", category:"Landscape",
+    price:42000, sizes:['A4','A3','A2','A1'],
+    desc:"A lush landscape capturing nature at its most majestic. Vivid greens and soft light make this piece feel alive on your wall.",
+    images:["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85"],
+    reviews:15
+  },
+  {
+    id:5, name:"Urban Geometry", category:"Abstract",
+    price:35000, sizes:['A4','A3','A2'],
+    desc:"Bold geometric forms in contrasting blacks and whites create a dynamic visual rhythm. A modern classic for contemporary spaces.",
+    images:["https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&q=85"],
+    reviews:22
+  },
+  {
+    id:6, name:"Sunset Canvas", category:"Landscape",
+    price:52000, sizes:['A3','A2','A1'],
+    desc:"The golden hour captured in oils — warm amber, deep violet, and soft pink sweep across this panoramic landscape piece.",
+    images:["https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=85"],
+    reviews:19, badge:"Featured"
+  },
+  {
+    id:7, name:"Floral Whisper", category:"Floral",
+    price:28000, sizes:['A4','A3','A2'],
+    desc:"Delicate botanicals painted in soft watercolour tones. Light, elegant, and perfect for bedrooms, nurseries, or powder rooms.",
+    images:["https://images.unsplash.com/photo-1490750967868-88df5691cc4a?w=800&q=85"],
+    reviews:27
+  },
+  {
+    id:8, name:"The Awakening", category:"Portrait",
+    price:72000, sizes:['A2','A1'],
+    desc:"A powerful figurative artwork rendered in bold strokes of charcoal and gold. One of our most sought-after collector pieces.",
+    images:["https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&q=85"],
+    reviews:11, badge:"Limited"
+  },
+  {
+    id:9, name:"River Calm", category:"Landscape",
+    price:39000, sizes:['A4','A3','A2','A1'],
+    desc:"A tranquil river scene with muted earth tones and soft reflections. Brings a sense of peace and stillness into any space.",
+    images:["https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=85"],
+    reviews:33
+  }
+];
+
+// Format price
+const fmt = n => '₦' + n.toLocaleString('en-NG');
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let cart = JSON.parse(localStorage.getItem('phiaq_cart')||'[]');
+let wishlist = JSON.parse(localStorage.getItem('phiaq_wishlist')||'[]');
+let user = JSON.parse(localStorage.getItem('phiaq_user')||'null');
+let users = JSON.parse(localStorage.getItem('phiaq_users')||'[]');
+let orders = JSON.parse(localStorage.getItem('phiaq_orders')||'[]');
+let currentProduct = null;
+let currentPage = 'home';
+let prevPage = 'shop';
+let selectedSize = '';
+let selectedPayMethod = 'bank';
+
+// ═══════════════════════════════════
+// PAGE ROUTING
+// ═══════════════════════════════════
+function showPage(p){
+  if(p !== 'detail') prevPage = currentPage;
+  currentPage = p;
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='shop') renderShop();
+  if(p==='account') renderAccount();
+  if(p==='checkout') renderCheckout();
+}
+function goBack(){ showPage(prevPage||'shop'); }
+
+// ═══════════════════════════════════
+// PRODUCT RENDERING
+// ═══════════════════════════════════
+function productCard(p, mini=false){
+  const inWL = wishlist.includes(p.id);
+  return `<div class="product-card" onclick="openProduct(${p.id})">
+    <div class="product-img">
+      <img src="${p.images[0]}" alt="${p.name}" loading="lazy"/>
+      ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+      <button class="product-wishlist ${inWL?'active':''}" onclick="toggleWishlist(event,${p.id})">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg></i>
+      </button>
+    </div>
+    <div class="product-info">
+      <div class="product-cat">${p.category}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-size">Available in ${p.sizes.join(' · ')}</div>
+      <div class="product-footer">
+        <div class="product-price">${fmt(p.price)}</div>
+        <button class="add-cart-btn" onclick="quickAdd(event,${p.id})">Add to Bag</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderShop(filter='all'){
+  const cats = [...new Set(PRODUCTS.map(p=>p.category))];
+  document.getElementById('shopFilters').innerHTML =
+    `<button class="filter-chip active" onclick="renderShop('all');setActiveFilter(this)">All</button>` +
+    cats.map(c=>`<button class="filter-chip" onclick="renderShop('${c}');setActiveFilter(this)">${c}</button>`).join('');
+  const filtered = filter==='all'?PRODUCTS:PRODUCTS.filter(p=>p.category===filter);
+  document.getElementById('shopCount').textContent = `${filtered.length} artwork${filtered.length!==1?'s':''}`;
+  document.getElementById('productsGrid').innerHTML = filtered.map(p=>productCard(p)).join('');
+}
+
+function setActiveFilter(el){
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Featured — show first 3 + featured badge ones
+function renderFeatured(){
+  const featured = PRODUCTS.filter(p=>p.badge||p.reviews>20).slice(0,3);
+  document.getElementById('featuredGrid').innerHTML = featured.map(p=>productCard(p)).join('');
+}
+
+// ═══════════════════════════════════
+// PRODUCT DETAIL
+// ═══════════════════════════════════
+function openProduct(id){
+  currentProduct = PRODUCTS.find(p=>p.id===id);
+  if(!currentProduct) return;
+  selectedSize = currentProduct.sizes[0];
+  document.getElementById('detailImgMain').src = currentProduct.images[0];
+  document.getElementById('detailImgMain').alt = currentProduct.name;
+  document.getElementById('detailCat').textContent = currentProduct.category;
+  document.getElementById('detailTitle').innerHTML = currentProduct.name.replace(/(\w+)$/, '<em>$1</em>');
+  document.getElementById('detailPrice').textContent = fmt(currentProduct.price);
+  document.getElementById('detailDesc').textContent = currentProduct.desc;
+  document.getElementById('detailReviews').textContent = `${currentProduct.reviews} reviews`;
+  document.getElementById('detailQty').value = 1;
+  // Sizes
+  document.getElementById('detailSizes').innerHTML = currentProduct.sizes.map((s,i)=>
+    `<button class="size-opt ${i===0?'active':''}" onclick="selectSize(this,'${s}')">${s}</button>`
+  ).join('');
+  // Thumbs
+  document.getElementById('detailThumbs').innerHTML = currentProduct.images.map((img,i)=>
+    `<img src="${img}" class="detail-thumb ${i===0?'active':''}" onclick="switchImg(this,'${img}')"/>`
+  ).join('');
+  showPage('detail');
+}
+
+function selectSize(el, s){
+  selectedSize = s;
+  document.querySelectorAll('.size-opt').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+function switchImg(el, src){
+  document.getElementById('detailImgMain').src = src;
+  document.querySelectorAll('.detail-thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function changeQty(d){
+  const el = document.getElementById('detailQty');
+  el.value = Math.max(1, parseInt(el.value)+d);
+}
+
+// ═══════════════════════════════════
+// CART
+// ═══════════════════════════════════
+function saveCart(){ localStorage.setItem('phiaq_cart',JSON.stringify(cart)); }
+
+function addToCart(product, size, qty=1){
+  const existing = cart.find(i=>i.id===product.id&&i.size===size);
+  if(existing){ existing.qty+=qty; } else {
+    cart.push({id:product.id,name:product.name,price:product.price,image:product.images[0],size,qty});
+  }
+  saveCart(); updateCartCount(); showToast('Added to bag ✓');
+}
+
+function quickAdd(e, id){
+  e.stopPropagation();
+  const p = PRODUCTS.find(x=>x.id===id);
+  addToCart(p, p.sizes[0], 1);
+}
+
+function addToCartFromDetail(){
+  addToCart(currentProduct, selectedSize, parseInt(document.getElementById('detailQty').value));
+}
+function buyNow(){
+  addToCartFromDetail();
+  if(!user){openAuth();return;}
+  toggleCart();
+  showPage('checkout');
+}
+
+function updateCartCount(){
+  const total = cart.reduce((s,i)=>s+i.qty,0);
+  const el = document.getElementById('cartCount');
+  el.textContent = total;
+  el.style.display = total>0?'flex':'none';
+}
+
+function toggleCart(){
+  document.getElementById('cartSidebar').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+  renderCartSidebar();
+}
+
+function renderCartSidebar(){
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if(!cart.length){
+    el.innerHTML=`<div class="cart-empty"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/></svg></i><p>Your bag is empty</p><p style="font-size:13px;margin-top:8px">Add some artworks to get started</p></div>`;
+    footer.style.display='none'; return;
+  }
+  footer.style.display='block';
+  el.innerHTML = cart.map((item,i)=>`
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.image}" alt="${item.name}"/>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">Size: ${item.size} · Qty: ${item.qty}</div>
+        <div class="cart-item-row">
+          <div class="cart-item-price">${fmt(item.price*item.qty)}</div>
+          <button class="cart-remove" onclick="removeFromCart(${i})"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></svg></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+  const total = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+  document.getElementById('cartTotal').textContent = fmt(total);
+}
+
+function removeFromCart(i){ cart.splice(i,1); saveCart(); updateCartCount(); renderCartSidebar(); }
+
+function goCheckout(){
+  if(!user){openAuth();return;}
+  toggleCart();
+  showPage('checkout');
+}
+
+// ═══════════════════════════════════
+// WISHLIST
+// ═══════════════════════════════════
+function toggleWishlist(e, id){
+  e.stopPropagation();
+  const i = wishlist.indexOf(id);
+  if(i>-1){wishlist.splice(i,1);showToast('Removed from wishlist');}
+  else{wishlist.push(id);showToast('Added to wishlist ♥');}
+  localStorage.setItem('phiaq_wishlist',JSON.stringify(wishlist));
+}
+
+// ═══════════════════════════════════
+// CHECKOUT
+// ═══════════════════════════════════
+function renderCheckout(){
+  const items = document.getElementById('checkoutItems');
+  items.innerHTML = cart.map(item=>`
+    <div class="order-item">
+      <img class="order-item-img" src="${item.image}" alt="${item.name}"/>
+      <div><div class="order-item-name">${item.name}</div><div class="order-item-meta">Size: ${item.size} · Qty: ${item.qty}</div></div>
+      <div class="order-item-price">${fmt(item.price*item.qty)}</div>
+    </div>`).join('');
+  const sub = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+  document.getElementById('coSubtotal').textContent = fmt(sub);
+  document.getElementById('coTotal').textContent = fmt(sub+2500);
+  if(user){
+    document.getElementById('co-email').value = user.email||'';
+    document.getElementById('co-fname').value = (user.name||'').split(' ')[0]||'';
+    document.getElementById('co-lname').value = (user.name||'').split(' ').slice(1).join(' ')||'';
+  }
+}
+
+function selectPayMethod(m){
+  selectedPayMethod = m;
+  document.getElementById('paystack-wrap').style.display = m==='paystack'?'block':'none';
+  document.getElementById('flutterwave-wrap').style.display = m==='flutterwave'?'block':'none';
+  document.getElementById('pm-paystack').classList.toggle('active',m==='paystack');
+  document.getElementById('pm-flutterwave').classList.toggle('active',m==='flutterwave');
+  document.getElementById('payBtnLabel').textContent = m==='flutterwave'?'Pay with Flutterwave':'Pay with Paystack';
+}
+
+// Validate delivery form fields before launching payment
+function validateForm(){
+  const fname = document.getElementById('co-fname').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+  const phone = document.getElementById('co-phone').value.trim();
+  const address = document.getElementById('co-address').value.trim();
+  if(!fname){showToast('Please enter your first name');return false;}
+  if(!email||!email.includes('@')){showToast('Please enter a valid email address');return false;}
+  if(!phone){showToast('Please enter your phone number');return false;}
+  if(!address){showToast('Please enter your delivery address');return false;}
+  if(!cart.length){showToast('Your cart is empty');return false;}
+  return true;
+}
+
+function getOrderTotal(){
+  return cart.reduce((s,i)=>s+(i.price*i.qty),0)+2500;
+}
+
+// Save order after confirmed payment
+function confirmOrder(paymentRef, gateway){
+  const fname = document.getElementById('co-fname').value.trim();
+  const lname = document.getElementById('co-lname').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+  const phone = document.getElementById('co-phone').value.trim();
+  const address = document.getElementById('co-address').value.trim();
+  const city = document.getElementById('co-city').value.trim();
+  const state = document.getElementById('co-state').value;
+  const orderId = 'PHA-' + Date.now().toString().slice(-6);
+  const order = {
+    id:orderId,
+    date:new Date().toLocaleDateString('en-NG'),
+    items:[...cart],
+    total:getOrderTotal(),
+    status:'Paid',
+    customer:{name:fname+' '+lname, email, phone, address, city, state},
+    payment:{gateway, ref:paymentRef}
+  };
+  orders.push(order);
+  localStorage.setItem('phiaq_orders',JSON.stringify(orders));
+  cart=[];saveCart();updateCartCount();
+  document.getElementById('successOrderNum').textContent = 'Order ID: '+orderId;
+  document.getElementById('successEmail').textContent = email;
+  showPage('success');
+}
+
+function placeOrder(){
+  if(!validateForm()) return;
+  const total = getOrderTotal();
+  const email = document.getElementById('co-email').value.trim();
+  const fname = document.getElementById('co-fname').value.trim();
+  const phone = document.getElementById('co-phone').value.trim();
+
+  if(selectedPayMethod === 'paystack'){
+    // ── PAYSTACK ──
+    const pubKey = document.getElementById('paystackKey').value.trim();
+    if(!pubKey || pubKey.includes('YOUR_PAYSTACK')){
+      showToast('Paystack key not configured — contact store owner');return;
+    }
+    const handler = PaystackPop.setup({
+      key: pubKey,
+      email: email,
+      amount: total * 100, // Paystack uses kobo
+      currency: 'NGN',
+      ref: 'PHA_' + Date.now(),
+      metadata:{
+        custom_fields:[
+          {display_name:'Customer Name',variable_name:'customer_name',value:fname},
+          {display_name:'Phone',variable_name:'phone',value:phone}
+        ]
+      },
+      callback: function(response){
+        // Payment successful — auto confirm
+        confirmOrder(response.reference, 'paystack');
+      },
+      onClose: function(){
+        showToast('Payment cancelled — your cart is saved');
+      }
+    });
+    handler.openIframe();
+
+  } else if(selectedPayMethod === 'flutterwave'){
+    // ── FLUTTERWAVE ──
+    const pubKey = document.getElementById('flutterwaveKey').value.trim();
+    if(!pubKey || pubKey.includes('YOUR_FLUTTERWAVE')){
+      showToast('Flutterwave key not configured — contact store owner');return;
+    }
+    const lname = document.getElementById('co-lname').value.trim();
+    FlutterwaveCheckout({
+      public_key: pubKey,
+      tx_ref: 'PHA_FLW_' + Date.now(),
+      amount: total,
+      currency: 'NGN',
+      payment_options: 'card,banktransfer,ussd,mobilemoney',
+      customer:{
+        email: email,
+        phone_number: phone,
+        name: fname + ' ' + lname
+      },
+      customizations:{
+        title: 'Phiaq Art Store',
+        description: 'Payment for artwork order',
+        logo: ''
+      },
+      callback: function(data){
+        if(data.status === 'successful' || data.status === 'completed'){
+          confirmOrder(data.transaction_id, 'flutterwave');
+        } else {
+          showToast('Payment was not completed');
+        }
+      },
+      onclose: function(){
+        showToast('Payment cancelled — your cart is saved');
+      }
+    });
+  }
+}
+
+// ═══════════════════════════════════
+// AUTH
+// ═══════════════════════════════════
+function openAuth(){ document.getElementById('authModal').classList.add('open'); }
+function closeAuth(){ document.getElementById('authModal').classList.remove('open'); }
+function switchTab(t){
+  document.querySelectorAll('.modal-tab').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.auth-form').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('form-'+t).classList.add('active');
+}
+
+function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if(!email||!pass){showToast('Please enter your email and password');return;}
+  const found = users.find(u=>u.email===email&&u.password===pass);
+  if(!found){showToast('Incorrect email or password');return;}
+  user=found;
+  localStorage.setItem('phiaq_user',JSON.stringify(user));
+  closeAuth();updateAuthUI();showToast('Welcome back, '+user.name.split(' ')[0]+'!');
+}
+
+function doSignup(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const pass = document.getElementById('signupPass').value;
+  const phone = document.getElementById('signupPhone').value.trim();
+  if(!name||!email||!pass){showToast('Please fill in all fields');return;}
+  if(pass.length<6){showToast('Password must be at least 6 characters');return;}
+  if(users.find(u=>u.email===email)){showToast('An account with this email already exists');return;}
+  const newUser = {id:Date.now(),name,email,password:pass,phone};
+  users.push(newUser);
+  localStorage.setItem('phiaq_users',JSON.stringify(users));
+  user=newUser;
+  localStorage.setItem('phiaq_user',JSON.stringify(user));
+  closeAuth();updateAuthUI();showToast('Account created! Welcome, '+name.split(' ')[0]+'!');
+}
+
+function logout(){
+  user=null;localStorage.removeItem('phiaq_user');
+  updateAuthUI();showPage('home');showToast('Signed out successfully');
+}
+
+function updateAuthUI(){
+  const btn = document.getElementById('authBtn');
+  if(user){
+    btn.innerHTML=`<svg style="color:var(--gold)" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/><path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg></i>`;
+    btn.onclick=()=>showPage('account');
+    document.getElementById('accountAvatar').textContent=(user.name||'U')[0].toUpperCase();
+    document.getElementById('accountName').textContent=user.name;
+    document.getElementById('accountEmail').textContent=user.email;
+    document.getElementById('profileName').value=user.name||'';
+    document.getElementById('profileEmail').value=user.email||'';
+    document.getElementById('profilePhone').value=user.phone||'';
+  } else {
+    btn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg></i>`;
+    btn.onclick=openAuth;
+  }
+}
+
+// ═══════════════════════════════════
+// ACCOUNT
+// ═══════════════════════════════════
+function switchPanel(p){
+  document.querySelectorAll('.account-panel').forEach(el=>el.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  document.querySelectorAll('.account-nav a').forEach(a=>a.classList.remove('active'));
+  event.target.closest('a').classList.add('active');
+  if(p==='wishlist') renderWishlist();
+  if(p==='orders') renderOrders();
+}
+
+function renderAccount(){
+  if(!user){openAuth();return;}
+  renderOrders();
+  renderWishlist();
+}
+
+function renderOrders(){
+  const userOrders = orders.filter(o=>o.customer.email===user?.email);
+  if(!userOrders.length){
+    document.getElementById('ordersContent').innerHTML=`<p style="color:var(--stone);margin-top:24px;font-size:14px">You haven't placed any orders yet. <a href="#" onclick="showPage('shop');return false;" style="color:var(--gold)">Start shopping →</a></p>`;
+    return;
+  }
+  document.getElementById('ordersContent').innerHTML=`
+    <table class="orders-table">
+      <thead><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>${userOrders.reverse().map(o=>`
+        <tr>
+          <td><strong>${o.id}</strong></td>
+          <td>${o.date}</td>
+          <td>${o.items.length} artwork${o.items.length!==1?'s':''}</td>
+          <td><strong>${fmt(o.total)}</strong></td>
+          <td><span class="order-status status-${o.status.toLowerCase()}">${o.status}</span></td>
+        </tr>`).join('')}</tbody>
+    </table>`;
+}
+
+function renderWishlist(){
+  const items = PRODUCTS.filter(p=>wishlist.includes(p.id));
+  document.getElementById('wishlistGrid').innerHTML = items.length
+    ? items.map(p=>productCard(p)).join('')
+    : `<p style="color:var(--stone);font-size:14px">Your wishlist is empty. <a href="#" onclick="showPage('shop');return false;" style="color:var(--gold)">Browse artworks →</a></p>`;
+}
+
+function saveProfile(){
+  if(!user) return;
+  user.name = document.getElementById('profileName').value;
+  user.phone = document.getElementById('profilePhone').value;
+  localStorage.setItem('phiaq_user',JSON.stringify(user));
+  updateAuthUI();
+  showToast('Profile saved ✓');
+}
+
+// ═══════════════════════════════════
+// THEME
+// ═══════════════════════════════════
+let dark = localStorage.getItem('phiaq_theme')==='dark';
+function toggleTheme(){
+  dark=!dark;
+  document.body.setAttribute('data-theme',dark?'dark':'');
+  document.getElementById('themeBtn').innerHTML=`<i class="bi bi-${dark?'sun':'moon'}"></i>`;
+  localStorage.setItem('phiaq_theme',dark?'dark':'');
+}
+if(dark){ document.body.setAttribute('data-theme','dark'); document.getElementById('themeBtn').innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg></i>`; }
+
+// ═══════════════════════════════════
+// TOAST
+// ═══════════════════════════════════
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ═══════════════════════════════════
+// NAVBAR SCROLL
+// ═══════════════════════════════════
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+document.getElementById('footerYear').textContent = new Date().getFullYear();
+renderFeatured();
+updateCartCount();
+updateAuthUI();
+</script>
+</body>
+</html>
